@@ -1,0 +1,102 @@
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap');
+
+:root {
+    --bg-color: #fcf8f2;
+    --text-main: #5a4a42;
+    --accent: #e63946;
+}
+
+body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: radial-gradient(circle, #ff4d6d 0%, #800f2f 100%);
+    font-family: 'Poppins', sans-serif;
+    overflow: hidden;
+}
+
+.background-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-image: url('https://www.transparenttextures.com/patterns/heart.png');
+    opacity: 0.2;
+    z-index: -1;
+}
+
+.card {
+    background-color: var(--bg-color);
+    width: 90%;
+    max-width: 950px;
+    border-radius: 50px;
+    padding: 60px;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+    position: relative;
+}
+
+.content-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+}
+
+.text-section {
+    flex: 1;
+    color: var(--text-main);
+}
+
+.intro { font-size: 1.1rem; opacity: 0.7; margin-bottom: 20px; }
+.messages p { font-size: 1.6rem; font-weight: 600; margin: 10px 0; line-height: 1.3; }
+.signature { 
+    font-family: 'Dancing Script', cursive; 
+    font-size: 2.5rem; 
+    color: var(--accent); 
+    margin-top: 30px; 
+}
+
+.counter-container {
+    margin-top: 50px;
+    padding-top: 5px;
+    border-top: 1px solid rgba(0,0,0,0.1);
+}
+
+#counter {
+    font-size: 2.3rem;
+    font-weight: 700;
+    color: #333;
+    margin-top: 10px;
+}
+
+/* Contenedor del Árbol Mágico */
+.tree-container {
+    flex: 1;
+    position: relative;
+    height: 450px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+#trunk-img {
+    height: 100%; /* Ajusta el tronco al contenedor */
+    width: auto;
+    z-index: 1;
+    user-select: none;
+}
+
+#heartCanvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2; /* Los corazones pasan por delante de las ramas */
+    pointer-events: none;
+}
+
+@media (max-width: 800px) {
+    .content-wrapper { flex-direction: column; text-align: center; }
+    .tree-container { height: 300px; }
+}

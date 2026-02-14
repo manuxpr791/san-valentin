@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bienvenida - Colorados Valcro</title>
+    <link rel="stylesheet" href="bienvenida.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div id="invitation-overlay">
+        <div class="envelope-wrapper">
+            <div class="envelope">
+                <div class="top"></div>
+                <div class="letter">
+                    <p class="pre-text" style="font-family: 'Poppins', sans-serif; font-weight: 600; color: #5a4a42; margin-bottom: 15px;">
+                        ¿Quieres ser mi San Valentín?
+                    </p>
+                    
+                    <div class="btn-group">
+                        <button id="btn-si" class="btn">SÍ</button>
+                        <button id="btn-no" class="btn">NO</button>
+                    </div>
+                </div>
+            </div>
+            <p class="click-me">Haz clic en el sobre para abrirlo</p>
+        </div>
+    </div>
+
+    <div id="carousel-container" class="hidden">
+        <div class="nav-arrows">
+            <button id="prev-arrow" class="arrow" title="Anterior">❮</button>
+            <button id="next-arrow" class="arrow" title="Siguiente">❯</button>
+        </div>
+
+        <div class="carousel">
+            <img src="assets/foto1.jpg" class="slide" alt="Recuerdo 1">
+            <img src="assets/foto2.jpg" class="slide" alt="Recuerdo 2">
+            <img src="assets/foto3.jpg" class="slide" alt="Recuerdo 3">
+            <img src="assets/foto4.jpg" class="slide" alt="Recuerdo 4">
+        </div>
+
+        <div id="heart-trigger" title="Haz clic para continuar">❤️</div>
+        
+        <p style="color: #e63946; font-family: 'Poppins', sans-serif; font-weight: 600; margin-top: 10px;">
+            Haz clic en el corazón cuando estés lista
+        </p>
+    </div>
+
+    <audio id="musica" loop>
+        <source src="assets/New West - Those Eyes (Home Session).mp3" type="audio/mpeg">
+        Tu navegador no soporta el audio.
+    </audio>
+
+    <script src="bienvenida.js"></script>
+</body>
+</html>

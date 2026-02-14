@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi San Valentin - Colorados Valcro</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="background-overlay"></div>
+    
+    <div class="card">
+        <div class="content-wrapper">
+            <div class="text-section">
+                <p class="intro">Para el amor de mi vida:</p>
+                <div class="messages">
+                    <p>Si pudiera elegir un lugar seguro, sería a tu lado.</p>
+                    <p>Cuanto más tiempo estoy contigo más te amo.</p>
+                    <p>Siempre amare tus locuras y tu increible amor.</p>
+                </div>
+                <p class="signature">— Te amo como nunca he amado a nadie!</p>
+                <div class="counter-container">
+                    <p>Mi amor por ti comenzó hace...</p>
+                    <div id="counter">Calculando...</div>
+                </div>
+            </div>
+
+            <div class="tree-container">
+                <img src="assets/arbol.png" id="trunk-img" alt="Tronco">
+                <canvas id="heartCanvas"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <audio id="musica" loop preload="auto">
+        <source src="assets/New West - Those Eyes (Home Session).mp3" type="audio/mpeg">
+    </audio>
+
+    <script src="script.js"></script>
+
+    <script>
+        const audio = document.getElementById('musica');
+
+        // FUNCIÓN AGRESIVA DE REPRODUCCIÓN
+        async function forzarReproduccion() {
+            const tiempoGuardado = localStorage.getItem('musica_posicion');
+            const debeSonar = localStorage.getItem('musica_sonando');
+
+            if (debeSonar === 'true' && audio) {
+                // Sincronizamos antes de dar Play
+                if (tiempoGuardado && audio.paused) {
+                    audio.currentTime = parseFloat(tiempoGuardado);
+                }
+
+                try {
+                    await audio.play();
+                    // Si llega aquí, es que el navegador ya nos dio permiso
+                    console.log("Audio desbloqueado con éxito.");
+                    
+                    // Fade in suave
+                    audio.volume = 0;
+                    let vol = 0;
+                    const fadeIn = setInterval(() => {
+                        if (vol < 0.5) {
+                            vol += 0.05;
+                            audio.volume = Math.min(vol, 0.5);
+                        } else {
+                            clearInterval(fadeIn);
+                        }
+                    }, 100);
+
+                    // Limpiamos los eventos para que no se reinicie la música al tocar de nuevo
+                    quitarListeners();
+                } catch (err) {
+                    console.error("El navegador aún bloquea el audio. Esperando toque...");
+                }
+            }
+        }
+
+        function quitarListeners() {
+            ['click', 'touchstart', 'scroll', 'mousedown'].forEach(e => 
+                document.removeEventListener(e, forzarReproduccion)
+            );
+        }
+
+        // LISTENERS DE DESBLOQUEO
+        // En cuanto ella toque la pantalla para ver el árbol o leer, el audio se activa
+        ['click', 'touchstart', 'scroll', 'mousedown'].forEach(e => 
+            document.addEventListener(e, forzarReproduccion)
+        );
+
+        // Intento automático inicial (por si el navegador lo permite)
+        window.addEventListener('load', forzarReproduccion);
+
+        // GUARDADO DE POSICIÓN (Persistencia en el servidor Valcro)
+        setInterval(() => {
+            if (audio && !audio.paused) {
+                localStorage.setItem('musica_posicion', audio.currentTime);
+            }
+        }, 1000);
+    </script>
+</body>
+</html>
