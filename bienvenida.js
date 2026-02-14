@@ -136,6 +136,6 @@ heartTrigger.addEventListener('click', () => {
     }
 
     setTimeout(() => {
-        window.location.href = "index.html?animate=true";
+        window.location.href = "arbol.html?animate=true";
     }, 1100);
 });
