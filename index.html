@@ -3,101 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mi San Valentin - Colorados Valcro</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Bienvenida - Colorados Valcro</title>
+    <link rel="stylesheet" href="bienvenida.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="background-overlay"></div>
-    
-    <div class="card">
-        <div class="content-wrapper">
-            <div class="text-section">
-                <p class="intro">Para el amor de mi vida:</p>
-                <div class="messages">
-                    <p>Si pudiera elegir un lugar seguro, sería a tu lado.</p>
-                    <p>Cuanto más tiempo estoy contigo más te amo.</p>
-                    <p>Siempre amare tus locuras y tu increible amor.</p>
-                </div>
-                <p class="signature">— Te amo como nunca he amado a nadie!</p>
-                <div class="counter-container">
-                    <p>Mi amor por ti comenzó hace...</p>
-                    <div id="counter">Calculando...</div>
-                </div>
-            </div>
 
-            <div class="tree-container">
-                <img src="assets/arbol.png" id="trunk-img" alt="Tronco">
-                <canvas id="heartCanvas"></canvas>
+    <div id="invitation-overlay">
+        <div class="envelope-wrapper">
+            <div class="envelope">
+                <div class="top"></div>
+                <div class="letter">
+                    <p class="pre-text" style="font-family: 'Poppins', sans-serif; font-weight: 600; color: #5a4a42; margin-bottom: 15px;">
+                        ¿Quieres ser mi San Valentín?
+                    </p>
+                    
+                    <div class="btn-group">
+                        <button id="btn-si" class="btn">SÍ</button>
+                        <button id="btn-no" class="btn">NO</button>
+                    </div>
+                </div>
             </div>
+            <p class="click-me">Haz clic en el sobre para abrirlo</p>
         </div>
     </div>
 
-    <audio id="musica" loop preload="auto">
+    <div id="carousel-container" class="hidden">
+        <div class="nav-arrows">
+            <button id="prev-arrow" class="arrow" title="Anterior">❮</button>
+            <button id="next-arrow" class="arrow" title="Siguiente">❯</button>
+        </div>
+
+        <div class="carousel">
+            <img src="assets/foto1.jpg" class="slide" alt="Recuerdo 1">
+            <img src="assets/foto2.jpg" class="slide" alt="Recuerdo 2">
+            <img src="assets/foto3.jpg" class="slide" alt="Recuerdo 3">
+            <img src="assets/foto4.jpg" class="slide" alt="Recuerdo 4">
+             <img src="assets/foto5.jpg" class="slide" alt="Recuerdo 5">
+            <img src="assets/foto6.jpg" class="slide" alt="Recuerdo 6">
+            <img src="assets/foto7.jpg" class="slide" alt="Recuerdo 7">
+             <img src="assets/foto8.jpg" class="slide" alt="Recuerdo 8">
+              <img src="assets/foto9.jpg" class="slide" alt="Recuerdo 9">
+              <img src="assets/foto10.jpg" class="slide" alt="Recuerdo 10">
+           <img src="assets/foto11.jpg" class="slide" alt="Recuerdo 11">
+  <img src="assets/foto12.jpg" class="slide" alt="Recuerdo 12">
+                                     <img src="assets/foto13.jpg" class="slide" alt="Recuerdo 13">
+
+                                                                                                                        <img src="assets/foto14.jpg" class="slide" alt="Recuerdo 14">
+
+                                                                                                                                    <img src="assets/foto15.jpg" class="slide" alt="Recuerdo 15">
+
+                                                                                                                                                <img src="assets/foto16.jpg" class="slide" alt="Recuerdo 16">
+
+                                                                                                                                                            <img src="assets/foto17.jpg" class="slide" alt="Recuerdo 17">
+
+
+
+
+        </div>
+
+        <div id="heart-trigger" title="Haz clic para continuar">❤️</div>
+        
+        <p style="color: #e63946; font-family: 'Poppins', sans-serif; font-weight: 600; margin-top: 10px;">
+            Haz clic en el corazón cuando estés lista
+        </p>
+    </div>
+
+    <audio id="musica" loop>
         <source src="assets/New West - Those Eyes (Home Session).mp3" type="audio/mpeg">
+        Tu navegador no soporta el audio.
     </audio>
 
-    <script src="script.js"></script>
-
-    <script>
-        const audio = document.getElementById('musica');
-
-        // FUNCIÓN AGRESIVA DE REPRODUCCIÓN
-        async function forzarReproduccion() {
-            const tiempoGuardado = localStorage.getItem('musica_posicion');
-            const debeSonar = localStorage.getItem('musica_sonando');
-
-            if (debeSonar === 'true' && audio) {
-                // Sincronizamos antes de dar Play
-                if (tiempoGuardado && audio.paused) {
-                    audio.currentTime = parseFloat(tiempoGuardado);
-                }
-
-                try {
-                    await audio.play();
-                    // Si llega aquí, es que el navegador ya nos dio permiso
-                    console.log("Audio desbloqueado con éxito.");
-                    
-                    // Fade in suave
-                    audio.volume = 0;
-                    let vol = 0;
-                    const fadeIn = setInterval(() => {
-                        if (vol < 0.5) {
-                            vol += 0.05;
-                            audio.volume = Math.min(vol, 0.5);
-                        } else {
-                            clearInterval(fadeIn);
-                        }
-                    }, 100);
-
-                    // Limpiamos los eventos para que no se reinicie la música al tocar de nuevo
-                    quitarListeners();
-                } catch (err) {
-                    console.error("El navegador aún bloquea el audio. Esperando toque...");
-                }
-            }
-        }
-
-        function quitarListeners() {
-            ['click', 'touchstart', 'scroll', 'mousedown'].forEach(e => 
-                document.removeEventListener(e, forzarReproduccion)
-            );
-        }
-
-        // LISTENERS DE DESBLOQUEO
-        // En cuanto ella toque la pantalla para ver el árbol o leer, el audio se activa
-        ['click', 'touchstart', 'scroll', 'mousedown'].forEach(e => 
-            document.addEventListener(e, forzarReproduccion)
-        );
-
-        // Intento automático inicial (por si el navegador lo permite)
-        window.addEventListener('load', forzarReproduccion);
-
-        // GUARDADO DE POSICIÓN (Persistencia en el servidor Valcro)
-        setInterval(() => {
-            if (audio && !audio.paused) {
-                localStorage.setItem('musica_posicion', audio.currentTime);
-            }
-        }, 1000);
-    </script>
+    <script src="bienvenida.js"></script>
 </body>
 </html>
